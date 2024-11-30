@@ -1,5 +1,6 @@
 # API Configuration
-API_URL = "http://localhost:7890"
+# API_URL = "http://localhost:7890"
+API_URL = "http://host.docker.internal:7890"
 
 # Graph Visualization Settings
 GRAPH_OPTIONS = {
