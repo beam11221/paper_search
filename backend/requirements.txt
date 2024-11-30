@@ -1,0 +1,13 @@
+fastapi==0.100.0
+uvicorn==0.22.0
+confluent_kafka
+openai==0.27.8
+qdrant-client
+pydantic==2.0.2
+umap-learn==0.5.3
+hdbscan
+plotly
+scikit-learn
+pandas
+kaleido
+pydantic-settings
