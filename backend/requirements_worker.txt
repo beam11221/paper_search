@@ -1,0 +1,5 @@
+confluent_kafka
+openai==0.27.8
+qdrant-client
+pydantic
+pydantic-settings

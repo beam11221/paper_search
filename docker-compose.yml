@@ -1,6 +1,35 @@
-version: '3.8'
-
 services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "7890:7890"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - kafka
+      - qdrant
+    networks:
+      - app-network
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - kafka
+      - qdrant
+    networks:
+      - app-network
 
   qdrant:
     image: qdrant/qdrant
@@ -16,7 +45,10 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - app-network
     restart: unless-stopped
+
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
@@ -28,6 +60,8 @@ services:
     volumes:
       - zookeeper_data:/var/lib/zookeeper/data
       - zookeeper_log:/var/lib/zookeeper/log
+    networks:
+      - app-network
     restart: unless-stopped
 
   kafka:
@@ -45,6 +79,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
       - kafka_data:/var/lib/kafka/data
+    networks:
+      - app-network
     restart: unless-stopped
 
   kafka-ui:
@@ -54,9 +90,24 @@ services:
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
+    networks:
+      - app-network
     depends_on:
       - kafka
     restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://backend:7890
+    depends_on:
+      - backend
+    networks:
+      - app-network
 
 volumes:
   qdrant_data:
@@ -67,3 +118,7 @@ volumes:
     driver: local
   kafka_data:
     driver: local
+
+networks:
+  app-network:
+    driver: bridge

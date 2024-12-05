@@ -1,13 +1,12 @@
 from pydantic_settings import BaseSettings
 from functools import lru_cache
-from typing import Optional
 
 class Settings(BaseSettings):
     # Worker Settings
     APP_PORT: int = 7890
 
     # OpenAI Settings
-    OPENAI_API_KEY: str
+    OPENAI_API_KEY: str = "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"
     EMBEDDING_MODEL: str = "text-embedding-3-large"
     EMBEDDING_DIM: int = 3072
 

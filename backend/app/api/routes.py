@@ -4,11 +4,6 @@ import json
 import uuid
 from qdrant_client import QdrantClient
 import numpy as np
-import umap
-import hdbscan
-from sklearn.preprocessing import StandardScaler
-import plotly.express as px
-import pandas as pd
 import networkx as nx
 from sklearn.neighbors import NearestNeighbors
 

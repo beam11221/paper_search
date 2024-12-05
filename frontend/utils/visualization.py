@@ -33,7 +33,7 @@ class NetworkVisualizer:
                 font_size = 12
                 shape = "box"
                 
-            hover_text = f"Title: {details["title"]}\n\nAbstract: {details["abstract"]}\n\nLink: {details["link"]}"
+            hover_text = f"Title: {details['title']}\n\nAbstract: {details['abstract']}\n\nLink: {details['link']}"
             
             # Calculate label width and wrap text
             title = details.get('title', str(node))
