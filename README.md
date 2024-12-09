@@ -115,13 +115,6 @@ python -m backend.worker
 - **Real-time Processing**: Asynchronous processing using Kafka
 - **Scalable Architecture**: Distributed system design for handling large datasets
 
-## 🧪 Testing
-
-Run the test suite:
-```bash
-python -m pytest tests/
-```
-
 ## API Documentation
 
 Once the backend is running, access the API documentation at:
